@@ -28,49 +28,34 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, classification_report
-
 data = pd.read_csv("Placement_Data.csv")
 print(data.head())
-
 data1 = data.copy()
 data1 = data1.drop(["sl_no", "salary"], axis=1)
 print(data1.head())
-
 print(data1.isnull().any())
 print(data1.duplicated().sum())
-
 cat_cols = ["gender", "ssc_b", "hsc_b", "hsc_s", "degree_t", "workex", "specialisation", "status"]
-
 le = LabelEncoder()
 for col in cat_cols:
     data1[col] = le.fit_transform(data1[col])
-
 print(data1.head())
-
 X = data1.iloc[:, :-1]
 y = data1["status"]
-
 print(X.head())
 print(y.head())
-
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
-
 print(X_train.shape)
 print(X_test.shape)
 print(y_train.shape)
 print(y_test.shape)
-
 lr = LogisticRegression(solver="liblinear")
 lr.fit(X_train, y_train)
-
 y_pred = lr.predict(X_test)
 print(y_pred)
-
 accuracy = accuracy_score(y_test, y_pred)
 print(accuracy)
-
 print(classification_report(y_test, y_pred))
-
 new_student = [[1, 80, 1, 90, 1, 1, 90, 1, 0, 85, 1, 85]]
 new_prediction = lr.predict(new_student)
 print(new_prediction[0])
