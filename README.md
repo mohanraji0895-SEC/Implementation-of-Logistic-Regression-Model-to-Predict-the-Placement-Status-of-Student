@@ -34,15 +34,21 @@ data = pd.read_csv("Placement_Data.csv")
 print("First 5 rows of the dataset:")
 print(data.head())
 
+
+
 data1 = data.copy()
 data1 = data1.drop(["sl_no", "salary"], axis=1)
 print("\nData after dropping 'sl_no' and 'salary':")
 print(data1.head())
 
+
+
 print("\nChecking for missing values (True = missing):")
 print(data1.isnull().any())
 print("\nNumber of duplicate rows:")
 print(data1.duplicated().sum())
+
+
 
 cat_cols = ["gender", "ssc_b", "hsc_b", "hsc_s",
 "degree_t", "workex", "specialisation", "status"]
@@ -55,6 +61,8 @@ data1[col] = le.fit_transform(data1[col])
 print("\nData after Label Encoding:")
 print(data1.head())
 
+
+
 X = data1.iloc[:, :-1]
 y = data1["status"]
 
@@ -63,9 +71,13 @@ print(X.head())
 print("\nTarget (y) sample:")
 print(y.head())
 
+
+
 X_train, X_test, y_train, y_test = train_test_split(
 X, y, test_size=0.2, random_state=0
 )
+
+
 
 print("\nTraining and testing shapes:")
 print("X_train:", X_train.shape)
