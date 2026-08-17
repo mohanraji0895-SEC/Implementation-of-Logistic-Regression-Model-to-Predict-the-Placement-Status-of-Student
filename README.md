@@ -8,18 +8,89 @@ To write a program to implement the the Logistic Regression Model to Predict the
 2. Anaconda – Python 3.7 Installation / Jupyter notebook
 
 ## Algorithm
-1. 
-2. 
-3. 
-4. 
+1. Start
+2. Load the placement dataset and create a copy, dropping the unwanted columns 'sl_no' and 'salary'
+3. Check the data for missing values and duplicate rows
+4. Encode the categorical columns using LabelEncoder
+5. Separate the data into features (X) and target (y)
+6. Split the data into training and testing sets
+7. Create and train the Logistic Regression model using the training set
+8. Predict the placement status on the test set and evaluate accuracy and classification report
+9. Predict the placement status for a new student
+10. Stop
 
 ## Program:
-```
-/*
 Program to implement the the Logistic Regression Model to Predict the Placement Status of Student.
-Developed by: 
-RegisterNumber:  
+Developed by: MOHANRAJI D
+RegisterNumber: 212225060164
 */
+import pandas as pd
+from sklearn.preprocessing import LabelEncoder
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score, classification_report
+
+data = pd.read_csv("Placement_Data.csv")
+print("First 5 rows of the dataset:")
+print(data.head())
+
+data1 = data.copy()
+data1 = data1.drop(["sl_no", "salary"], axis=1)
+print("\nData after dropping 'sl_no' and 'salary':")
+print(data1.head())
+
+print("\nChecking for missing values (True = missing):")
+print(data1.isnull().any())
+print("\nNumber of duplicate rows:")
+print(data1.duplicated().sum())
+
+cat_cols = ["gender", "ssc_b", "hsc_b", "hsc_s",
+"degree_t", "workex", "specialisation", "status"]
+
+le = LabelEncoder()
+
+for col in cat_cols:
+data1[col] = le.fit_transform(data1[col])
+
+print("\nData after Label Encoding:")
+print(data1.head())
+
+X = data1.iloc[:, :-1]
+y = data1["status"]
+
+print("\nFeatures (X) sample:")
+print(X.head())
+print("\nTarget (y) sample:")
+print(y.head())
+
+X_train, X_test, y_train, y_test = train_test_split(
+X, y, test_size=0.2, random_state=0
+)
+
+print("\nTraining and testing shapes:")
+print("X_train:", X_train.shape)
+print("X_test:", X_test.shape)
+print("y_train:", y_train.shape)
+print("y_test:", y_test.shape)
+
+lr = LogisticRegression(solver="liblinear")
+lr.fit(X_train, y_train)
+
+y_pred = lr.predict(X_test)
+print("\nPredicted values (y_pred):")
+print(y_pred)
+
+accuracy = accuracy_score(y_test, y_pred)
+print("\nModel Accuracy:", accuracy)
+
+print("\nClassification Report:")
+print(classification_report(y_test, y_pred))
+
+new_student = [[1, 80, 1, 90, 1, 1, 90, 1, 0, 85, 1, 85]]
+new_prediction = lr.predict(new_student)
+
+print("\nPrediction for new student (0 = Not Placed, 1 = Placed):")
+print(new_prediction[0])
 ```
 
 ## Output:
