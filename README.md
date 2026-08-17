@@ -16,12 +16,11 @@ To write a program to implement the the Logistic Regression Model to Predict the
 9. Predict the placement status for a new student
 10. Stop
 ## Program:
-...
+```
 /*
 Program to implement the the Logistic Regression Model to Predict the Placement Status of Student.
 Developed by: MOHANRAJI D
-RegisterNumber: 212225060164
-*/
+RegisterNumber:  212225060134
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
@@ -42,15 +41,18 @@ cat_cols = ["gender", "ssc_b", "hsc_b", "hsc_s", "degree_t", "workex", "speciali
 
 le = LabelEncoder()
 for col in cat_cols:
-data1[col] = le.fit_transform(data1[col])
+    data1[col] = le.fit_transform(data1[col])
+
 print(data1.head())
 
 X = data1.iloc[:, :-1]
 y = data1["status"]
+
 print(X.head())
 print(y.head())
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
+
 print(X_train.shape)
 print(X_test.shape)
 print(y_train.shape)
@@ -64,12 +66,14 @@ print(y_pred)
 
 accuracy = accuracy_score(y_test, y_pred)
 print(accuracy)
+
 print(classification_report(y_test, y_pred))
 
 new_student = [[1, 80, 1, 90, 1, 1, 90, 1, 0, 85, 1, 85]]
 new_prediction = lr.predict(new_student)
 print(new_prediction[0])
-
+*/
+```
 
 ## Output:
 ![the Logistic Regression Model to Predict the Placement Status of Student](sam.png)
